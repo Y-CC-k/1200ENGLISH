@@ -173,3 +173,40 @@ header p {
     background-color: #ccc;
     cursor: not-allowed;
 }
+
+/* --- 教學模式樣式 (Teaching Mode) --- */
+/* 當 body 標籤有 .teaching-mode class 時啟用 */
+
+/* 1. 改變 word-list 容器的佈局，使其能將單一卡片置中 */
+.teaching-mode #word-list {
+    display: flex; /* 改為 flex 佈局 */
+    justify-content: center; /* 水平置中 */
+    align-items: center; /* 垂直置中 */
+    grid-template-columns: 1fr; /* 取消多欄網格 */
+    min-height: 60vh; /* 給予足夠的高度以實現垂直置中 */
+    padding: 20px;
+    margin-top: 0;
+}
+
+/* 2. 在教學模式中，只顯示指定的卡片 (需要 JS 配合加上 .active class) */
+.teaching-mode .word-card {
+    display: none; /* 預設隱藏所有卡片 */
+    max-width: 600px; /* 讓卡片可以更寬一點 */
+    width: 100%;
+    transform: translateY(0); /* 取消 hover 效果的位移 */
+}
+
+.teaching-mode .word-card:hover {
+    transform: none; /* 取消 hover 效果 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* 恢復成預設陰影 */
+}
+
+.teaching-mode .word-card.active {
+    display: flex; /* 只顯示有 .active class 的卡片 */
+}
+
+/* 3. 核心要求：將英文單字（主題）放大 */
+.teaching-mode .word-card .english {
+    font-size: 6rem; /* 大幅增加字體大小 */
+    line-height: 1.2;
+}

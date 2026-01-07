@@ -1,7 +1,7 @@
 /* 基本樣式 */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: #fff; /* 改為純白背景 */
+    background-color: #f4f7f9; /* 使用一個柔和的灰白色背景，增加質感 */
     color: #333; /* 主要文字顏色 */
     line-height: 1.6;
     margin: 0;
@@ -9,20 +9,20 @@ body {
 
 header {
     text-align: center;
-    padding: 15px 10px; /* 減少上下內距 */
-    border-bottom: 1px solid #e0e0e0; /* 新增底線分隔 */
-    margin-bottom: 1%; /* 減少與下方內容的距離 */
+    padding: 15px 10px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 1%;
 }
 
 h1 {
-    color: #00529B; /* 參考網站的主藍色 */
-    font-size: 2.2rem; /* 縮小標題字體 */
+    color: #00529B;
+    font-size: 2.2rem;
     margin: 0 0 10px 0;
 }
 
 header p {
     color: #666;
-    font-size: 1rem; /* 縮小副標題字體 */
+    font-size: 1rem;
 }
 
 /* 控制項樣式 */
@@ -30,11 +30,12 @@ header p {
     display: flex;
     justify-content: center;
     gap: 20px;
+    align-items: center;
     margin-bottom: 40px;
     background-color: #fff;
     padding: 10px;
     border-radius: 8px;
-    max-width: 860px; /* 限制最大寬度 */
+    max-width: 860px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -46,7 +47,6 @@ header p {
 }
 
 .select-group select {
-    /* 美化下拉選單 */
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -59,25 +59,22 @@ header p {
     background-repeat: no-repeat;
     background-position: right 12px center;
     background-size: 10px;
-    padding-right: 30px; /* 為箭頭留出空間 */
+    padding-right: 30px;
     cursor: pointer;
 }
 
 /* 單字卡片容器 */
-/* 將 .word-list-container 改為 #word-list 以匹配 script.js 和 HTML */
 #word-list {
     display: grid;
-    /* 建立固定的兩欄，每欄佔據可用空間的一半 */
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    max-width: 900px; /* 設定一個較窄的最大寬度以適應兩欄佈局 */
-    margin: 40px auto; /* 上下也增加間距 */
+    max-width: 900px;
+    margin: 40px auto;
     padding: 20px;
 }
 
-/* 讓提示訊息可以橫跨整個網格寬度 */
 #word-list .message {
-    grid-column: 1 / -1; /* 從第一欄橫跨到最後一欄 */
+    grid-column: 1 / -1;
     text-align: center;
 }
 
@@ -85,22 +82,21 @@ header p {
 .word-card {
     background-color: #fff;
     border-radius: 8px;
-    border: 1px solid #e0e0e0; /* 使用邊框代替部分陰影 */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* 更柔和的陰影 */
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* 讓卡片內容垂直均勻分布 */
-    min-height: 200px; /* 設定最小高度讓卡片更整齊 */
-    transition: transform 0.2s ease-in-out;
+    justify-content: space-between;
+    min-height: 200px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .word-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* 滑鼠懸停時陰影更明顯 */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
-/* 新增：單字資訊容器，使其置中 */
 .word-info {
     text-align: center;
     width: 100%;
@@ -109,30 +105,26 @@ header p {
 .word-card .english {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #00529B; /* 主藍色 */
-    margin: 0;
-    margin-bottom: 5px;
+    color: #00529B;
+    margin: 0 0 5px 0;
 }
 
-/* 新增：音標樣式 */
 .word-card .phonetic {
     font-size: 1.1rem;
     color: #666;
     margin: 0 0 10px 0;
 }
 
-/* 新增：詞性與中文的容器樣式 */
 .word-card .details {
     font-size: 1.3rem;
     color: #34495e;
     margin: 0;
 }
 
-/* 新增：詞性標籤樣式 */
 .word-card .pos {
     display: inline-block;
-    background-color: #e7f5ff; /* 淡藍色背景 */
-    color: #00529B; /* 主藍色文字 */
+    background-color: #e7f5ff;
+    color: #00529B;
     padding: 2px 8px;
     border-radius: 4px;
     font-size: 0.9rem;
@@ -140,7 +132,6 @@ header p {
     margin-right: 8px;
 }
 
-/* 新增：例句樣式 */
 .word-card .sentence {
     font-size: 1rem;
     color: #777;
@@ -150,7 +141,7 @@ header p {
 
 /* 播放按鈕 */
 .play-audio-btn {
-    background-color: #FFC107; /* 參考網站的黃色作為強調色 */
+    background-color: #FFC107;
     color: white;
     border: none;
     border-radius: 50%;
@@ -161,12 +152,12 @@ header p {
     display: flex;
     justify-content: center;
     align-items: center;
-    align-self: center; /* 讓按鈕本身在 flex 容器中置中 */
+    align-self: center;
     transition: background-color 0.2s;
 }
 
 .play-audio-btn:hover {
-    background-color: #FFD54F; /* 滑鼠懸停時變亮 */
+    background-color: #FFD54F;
 }
 
 .play-audio-btn:disabled {
@@ -174,39 +165,107 @@ header p {
     cursor: not-allowed;
 }
 
-/* --- 教學模式樣式 (Teaching Mode) --- */
-/* 當 body 標籤有 .teaching-mode class 時啟用 */
-
-/* 1. 改變 word-list 容器的佈局，使其能將單一卡片置中 */
-.teaching-mode #word-list {
-    display: flex; /* 改為 flex 佈局 */
-    justify-content: center; /* 水平置中 */
-    align-items: center; /* 垂直置中 */
-    grid-template-columns: 1fr; /* 取消多欄網格 */
-    min-height: 60vh; /* 給予足夠的高度以實現垂直置中 */
-    padding: 20px;
-    margin-top: 0;
+/* --- 教學模式控制按鈕樣式 --- */
+#toggle-teaching-mode {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
 }
 
-/* 2. 在教學模式中，只顯示指定的卡片 (需要 JS 配合加上 .active class) */
-.teaching-mode .word-card {
-    display: none; /* 預設隱藏所有卡片 */
-    max-width: 600px; /* 讓卡片可以更寬一點 */
+#toggle-teaching-mode:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #0056b3;
+    border-color: #0056b3;
+    color: white;
+}
+
+/* 當 Modal 彈出時，「結束教學」按鈕的樣式 */
+.modal-open #toggle-teaching-mode {
+    background-color: #dc3545; /* 紅色 */
+    border-color: #dc3545;
+}
+.modal-open #toggle-teaching-mode:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+/* --- Modal (教學模式彈出視窗) 樣式 --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    transform: translateY(0); /* 取消 hover 效果的位移 */
+    height: 100%;
+    background-color: #fff; /* 根據要求改為純白背景 */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-.teaching-mode .word-card:hover {
-    transform: none; /* 取消 hover 效果 */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* 恢復成預設陰影 */
+.modal-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.teaching-mode .word-card.active {
-    display: flex; /* 只顯示有 .active class 的卡片 */
+/* Modal 內的單字卡列表容器 */
+.modal-content #word-list {
+    min-height: initial;
+    grid-template-columns: 1fr; /* 在 Modal 中永遠是單欄 */
 }
 
-/* 3. 核心要求：將英文單字（主題）放大 */
-.teaching-mode .word-card .english {
-    font-size: 6rem; /* 大幅增加字體大小 */
+/* Modal 內的單字卡 */
+.modal-content .word-card {
+    display: none;
+    max-width: 600px;
+    width: 90%; /* 在小螢幕上佔 90% 寬度 */
+    transform: translateY(0);
+    border: none; /* 根據要求移除框線 */
+    box-shadow: none; /* 同時移除陰影，讓其完全融入背景 */
+}
+
+.modal-content .word-card:hover {
+    transform: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.modal-content .word-card.active {
+    display: flex;
+}
+
+.modal-content .word-card .english {
+    font-size: 18rem; /* 根據要求放大 3 倍 (6rem * 3) */
     line-height: 1.2;
+    white-space: nowrap; /* 新增：防止文字自動換行，以便 JS 測量寬度 */
+}
+
+/* Modal 的關閉按鈕 */
+.modal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 40px;
+    color: #333; /* 因應白色背景，將關閉按鈕改為深色 */
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.modal-close-btn:hover {
+    transform: scale(1.2);
 }

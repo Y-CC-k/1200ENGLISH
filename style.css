@@ -1,0 +1,175 @@
+/* 基本樣式 */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #fff; /* 改為純白背景 */
+    color: #333; /* 主要文字顏色 */
+    line-height: 1.6;
+    margin: 0;
+}
+
+header {
+    text-align: center;
+    padding: 15px 10px; /* 減少上下內距 */
+    border-bottom: 1px solid #e0e0e0; /* 新增底線分隔 */
+    margin-bottom: 1%; /* 減少與下方內容的距離 */
+}
+
+h1 {
+    color: #00529B; /* 參考網站的主藍色 */
+    font-size: 2.2rem; /* 縮小標題字體 */
+    margin: 0 0 10px 0;
+}
+
+header p {
+    color: #666;
+    font-size: 1rem; /* 縮小副標題字體 */
+}
+
+/* 控制項樣式 */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 40px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 860px; /* 限制最大寬度 */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.select-group label {
+    margin-right: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.select-group select {
+    /* 美化下拉選單 */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 10px;
+    padding-right: 30px; /* 為箭頭留出空間 */
+    cursor: pointer;
+}
+
+/* 單字卡片容器 */
+/* 將 .word-list-container 改為 #word-list 以匹配 script.js 和 HTML */
+#word-list {
+    display: grid;
+    /* 建立固定的兩欄，每欄佔據可用空間的一半 */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 900px; /* 設定一個較窄的最大寬度以適應兩欄佈局 */
+    margin: 40px auto; /* 上下也增加間距 */
+    padding: 20px;
+}
+
+/* 讓提示訊息可以橫跨整個網格寬度 */
+#word-list .message {
+    grid-column: 1 / -1; /* 從第一欄橫跨到最後一欄 */
+    text-align: center;
+}
+
+/* 單字卡片樣式 */
+.word-card {
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0; /* 使用邊框代替部分陰影 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* 更柔和的陰影 */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 讓卡片內容垂直均勻分布 */
+    min-height: 200px; /* 設定最小高度讓卡片更整齊 */
+    transition: transform 0.2s ease-in-out;
+}
+
+.word-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* 滑鼠懸停時陰影更明顯 */
+}
+
+/* 新增：單字資訊容器，使其置中 */
+.word-info {
+    text-align: center;
+    width: 100%;
+}
+
+.word-card .english {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #00529B; /* 主藍色 */
+    margin: 0;
+    margin-bottom: 5px;
+}
+
+/* 新增：音標樣式 */
+.word-card .phonetic {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0 0 10px 0;
+}
+
+/* 新增：詞性與中文的容器樣式 */
+.word-card .details {
+    font-size: 1.3rem;
+    color: #34495e;
+    margin: 0;
+}
+
+/* 新增：詞性標籤樣式 */
+.word-card .pos {
+    display: inline-block;
+    background-color: #e7f5ff; /* 淡藍色背景 */
+    color: #00529B; /* 主藍色文字 */
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-right: 8px;
+}
+
+/* 新增：例句樣式 */
+.word-card .sentence {
+    font-size: 1rem;
+    color: #777;
+    margin: 10px 0 0 0;
+    font-style: italic;
+}
+
+/* 播放按鈕 */
+.play-audio-btn {
+    background-color: #FFC107; /* 參考網站的黃色作為強調色 */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center; /* 讓按鈕本身在 flex 容器中置中 */
+    transition: background-color 0.2s;
+}
+
+.play-audio-btn:hover {
+    background-color: #FFD54F; /* 滑鼠懸停時變亮 */
+}
+
+.play-audio-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startQuizBtn = document.getElementById('start-quiz-btn');
     const quizContainer = document.getElementById('quiz-container');
     
-    let controlsContainer = null; 
+    let controlsContainer = document.querySelector('.controls');
 
     let currentGradeData = null;
     let isAudioPlaying = false;
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let isAutoplaying = false;
     let autoplayTimeoutId = null;
 
-    const toggleModeBtn = document.createElement('button');
+    let toggleModeBtn = null;
     
     // 新增：Modal 相關的 DOM 元素
     let modalOverlay = null;
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 根據所在頁面執行不同清理操作
         if (wordListContainer) { // 在 index.html
             wordListContainer.innerHTML = '';
-            toggleModeBtn.style.display = 'none';
+            if (toggleModeBtn) toggleModeBtn.style.display = 'none';
         }
         if (quizContainer) {
             quizContainer.style.display = 'none';
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 根據所在頁面執行不同操作
         if (wordListContainer) { // 在 index.html
             wordListContainer.innerHTML = '';
-            toggleModeBtn.style.display = 'none';
+            if (toggleModeBtn) toggleModeBtn.style.display = 'none';
         }
         if (quizContainer) { // 在 activity.html
             quizContainer.style.display = 'none';
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // 如果有教學模式按鈕且有單字卡，則顯示它
-            if (toggleModeBtn && wordListContainer.querySelector('.word-card')) {
+            if (toggleModeBtn && wordListContainer.querySelector('.word-card')) { // 只有 index.html 有此按鈕
                 toggleModeBtn.style.display = 'inline-block';
             }
         }
@@ -306,20 +306,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 初始化控制按鈕和 Modal
     function setupControlsAndModal() {
-        // --- 控制按鈕 ---
-        controlsContainer = document.querySelector('.controls');
-        if (!controlsContainer) {
-            console.warn('警告：在 HTML 中找不到 ".controls" 容器。將自動建立一個。');
-            controlsContainer = document.createElement('div');
-            controlsContainer.className = 'controls';
-            const header = document.querySelector('header');
-            if (header) {
-                header.insertAdjacentElement('afterend', controlsContainer);
-            } else {
-                document.body.prepend(controlsContainer);
-            }
-        }
+        // 此函式現在只在 index.html 執行，所以可以直接建立教學模式按鈕
+        if (!controlsContainer) return;
 
+        // --- 建立教學模式按鈕 ---
+        toggleModeBtn = document.createElement('button');
         toggleModeBtn.id = 'toggle-teaching-mode';
         toggleModeBtn.textContent = '教學模式';
         toggleModeBtn.style.display = 'none';
@@ -458,12 +449,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 僅在 index.html 執行的部分
         if (wordListContainer) {
-            setupControlsAndModal();
-            displayMessage("請先選擇年級。");
+            // 如果 wordListContainer 存在於 index.html (它有一個前往活動的按鈕)
+            if (document.querySelector('.activity-zone-container a[href="activity.html"]')) {
+                setupControlsAndModal();
+            }
         }
 
         // 僅在 activity.html 執行的部分
-        if (startQuizBtn && quizContainer) {
+        if (startQuizBtn) {
             startQuizBtn.disabled = true;
             startQuizBtn.addEventListener('click', startQuiz);
         }

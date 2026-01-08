@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>英文單字學習網</title>
+    <title>學習活動 - 1200 English Words</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <header>
-        <h1>臺中市清水區槺榔國民小學英文單字學習網</h1>
-        <p>請選擇年級與週次來開始學習</p>
+        <h1>學習活動</h1>
+        <p>請選擇年級與週次來開始挑戰</p>
+        <nav>
+            <a href="index.html">返回首頁</a>
+        </nav>
     </header>
 
-    <main>
+    <main id="activity-container">
         <div class="controls">
             <div class="select-group">
                 <label for="grade-select">選擇年級：</label>
@@ -34,18 +36,17 @@
             </div>
         </div>
 
-        <div id="word-list" class="word-list-container">
-            <!-- JavaScript 將會在這裡動態插入單字卡 -->
-        </div>
+        <div id="activity-zone" class="activity-zone-container">
+            <h2>選擇題測驗</h2>
+            <p>選擇年級與週次後，點擊按鈕開始！</p>
+            <button id="start-quiz-btn" class="activity-btn" disabled>開始選擇題測驗</button>
 
-        <div class="activity-zone-container">
-            <h2>準備好挑戰了嗎？</h2>
-            <p>前往學習活動頁面，測試您的單字熟練度！</p>
-            <a href="activity.html" class="activity-btn">前往學習活動</a>
+            <div id="quiz-container" class="quiz-container" style="display: none;">
+                <!-- 測驗內容將由 JavaScript 動態生成 -->
+            </div>
         </div>
     </main>
 
-    <!-- defer 屬性確保 HTML 解析完畢後才執行 JS -->
     <script src="script.js"></script>
 </body>
 </html>

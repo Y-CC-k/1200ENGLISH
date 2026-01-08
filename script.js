@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 獲取 DOM 元素
+    // --- 共通 DOM 元素 ---
     const gradeSelect = document.getElementById('grade-select');
     const weekSelect = document.getElementById('week-select');
+
+    // --- index.html 專用 DOM 元素 ---
     const wordListContainer = document.getElementById('word-list');
-    // 新增：獲取活動區塊的 DOM 元素
+
+    // --- activity.html 專用 DOM 元素 ---
     const startQuizBtn = document.getElementById('start-quiz-btn');
     const quizContainer = document.getElementById('quiz-container');
     
@@ -27,14 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. 當年級改變時，載入對應的 JSON 資料
     async function handleGradeChange() {
         const selectedGrade = gradeSelect.value;
-        
+
         weekSelect.innerHTML = '<option value="">--請選擇--</option>';
-        wordListContainer.innerHTML = '';
         currentGradeData = null;
-        if (toggleModeBtn) {
+
+        // 根據所在頁面執行不同清理操作
+        if (wordListContainer) { // 在 index.html
+            wordListContainer.innerHTML = '';
             toggleModeBtn.style.display = 'none';
         }
-        // 新增：切換年級時，隱藏並清空測驗區塊
         if (quizContainer) {
             quizContainer.style.display = 'none';
             quizContainer.innerHTML = '';
@@ -42,13 +46,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         if (!selectedGrade) {
-            displayMessage("請先選擇年級。");
+            if (wordListContainer) displayMessage("請先選擇年級。");
             weekSelect.disabled = true;
+            if (startQuizBtn) startQuizBtn.disabled = true;
             return;
         }
 
         weekSelect.disabled = true;
-        displayMessage("正在載入年級資料...");
+        if (startQuizBtn) startQuizBtn.disabled = true;
+
+        if (wordListContainer) displayMessage("正在載入年級資料...");
 
         try {
             const response = await fetch(`./document/grade${selectedGrade}.json`);
@@ -57,11 +64,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             currentGradeData = await response.json();
             populateWeekSelect();
-            displayMessage("請選擇週次來顯示單字。");
+            if (wordListContainer) displayMessage("請選擇週次來顯示單字。");
             weekSelect.disabled = false;
         } catch (error) {
             console.error("無法載入單字資料:", error);
-            displayMessage(`錯誤：無法載入 ${selectedGrade} 年級的資料。請檢查 document/grade${selectedGrade}.json 檔案。`);
+            if (wordListContainer) {
+                displayMessage(`錯誤：無法載入 ${selectedGrade} 年級的資料。請檢查 document/grade${selectedGrade}.json 檔案。`);
+            }
         }
     }
 
@@ -81,13 +90,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayWordsForWeek() {
         const selectedGrade = gradeSelect.value;
         const selectedWeek = weekSelect.value;
-        
-        wordListContainer.innerHTML = '';
-        if (toggleModeBtn) {
+
+        // 根據所在頁面執行不同操作
+        if (wordListContainer) { // 在 index.html
+            wordListContainer.innerHTML = '';
             toggleModeBtn.style.display = 'none';
         }
-        // 新增：切換週次時，隱藏並清空測驗區塊
-        if (quizContainer) {
+        if (quizContainer) { // 在 activity.html
             quizContainer.style.display = 'none';
             quizContainer.innerHTML = '';
         }
@@ -97,24 +106,31 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // 在 activity.html，選擇週次後啟用測驗按鈕
+        if (startQuizBtn) {
+            startQuizBtn.disabled = false;
+        }
+
         const weekData = currentGradeData.weeks.find(
             (w) => w.week.toString() === selectedWeek
         );
         
         if (!weekData || weekData.content.length === 0) {
-            displayMessage("這個組合沒有找到任何單字。");
+            if (wordListContainer) displayMessage("這個組合沒有找到任何單字。");
             return;
         }
 
-        weekData.content.forEach(word => {
-            const card = createWordCard(word, selectedGrade, selectedWeek);
-            wordListContainer.appendChild(card);
-        });
+        // 只在 index.html 才顯示單字卡列表
+        if (wordListContainer) {
+            weekData.content.forEach(word => {
+                const card = createWordCard(word, selectedGrade, selectedWeek);
+                wordListContainer.appendChild(card);
+            });
 
-        // 這裡的 wordCards 是主畫面的，教學模式會用複製的版本
-        const mainWordCards = wordListContainer.querySelectorAll('.word-card');
-        if (toggleModeBtn && mainWordCards.length > 0) {
-            toggleModeBtn.style.display = 'inline-block';
+            const mainWordCards = wordListContainer.querySelectorAll('.word-card');
+            if (toggleModeBtn && mainWordCards.length > 0) {
+                toggleModeBtn.style.display = 'inline-block';
+            }
         }
     }
 
@@ -435,12 +451,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // 程式起始點
-    setupControlsAndModal(); 
-    displayMessage("請先選擇年級。");
-    weekSelect.disabled = true;
-    gradeSelect.addEventListener('change', handleGradeChange);
-    weekSelect.addEventListener('change', displayWordsForWeek);
+    if (gradeSelect && weekSelect) {
+        weekSelect.disabled = true;
+        gradeSelect.addEventListener('change', handleGradeChange);
+        weekSelect.addEventListener('change', displayWordsForWeek);
 
-    // 新增：為測驗按鈕綁定事件
-    startQuizBtn.addEventListener('click', startQuiz);
+        // 僅在 index.html 執行的部分
+        if (wordListContainer) {
+            setupControlsAndModal();
+            displayMessage("請先選擇年級。");
+        }
+
+        // 僅在 activity.html 執行的部分
+        if (startQuizBtn && quizContainer) {
+            startQuizBtn.disabled = true;
+            startQuizBtn.addEventListener('click', startQuiz);
+        }
+    }
 });

@@ -269,3 +269,71 @@ header p {
 .modal-close-btn:hover {
     transform: scale(1.2);
 }
+
+/* --- 活動區塊樣式 --- */
+.activity-zone-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.activity-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.2s;
+}
+
+.activity-btn:hover {
+    background-color: #218838;
+}
+
+/* --- 測驗容器樣式 --- */
+.quiz-container {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.quiz-question {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.quiz-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.quiz-option {
+    background-color: #f0f0f0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quiz-option:hover {
+    background-color: #e0e0e0;
+    border-color: #007bff;
+}
+
+/* 答題回饋樣式 */
+.quiz-option.correct { background-color: #d4edda; border-color: #c3e6cb; }
+.quiz-option.incorrect { background-color: #f8d7da; border-color: #f5c6cb; }
+.quiz-option.disabled { pointer-events: none; opacity: 0.7; }

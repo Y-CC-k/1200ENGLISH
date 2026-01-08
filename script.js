@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const gradeSelect = document.getElementById('grade-select');
     const weekSelect = document.getElementById('week-select');
     const wordListContainer = document.getElementById('word-list');
+    // 新增：獲取活動區塊的 DOM 元素
+    const startQuizBtn = document.getElementById('start-quiz-btn');
+    const quizContainer = document.getElementById('quiz-container');
     
     let controlsContainer = null; 
 
@@ -31,6 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (toggleModeBtn) {
             toggleModeBtn.style.display = 'none';
         }
+        // 新增：切換年級時，隱藏並清空測驗區塊
+        if (quizContainer) {
+            quizContainer.style.display = 'none';
+            quizContainer.innerHTML = '';
+        }
+
 
         if (!selectedGrade) {
             displayMessage("請先選擇年級。");
@@ -77,6 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (toggleModeBtn) {
             toggleModeBtn.style.display = 'none';
         }
+        // 新增：切換週次時，隱藏並清空測驗區塊
+        if (quizContainer) {
+            quizContainer.style.display = 'none';
+            quizContainer.innerHTML = '';
+        }
+
 
         if (!selectedGrade || !selectedWeek) {
             return;
@@ -128,6 +143,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const playBtn = card.querySelector('.play-audio-btn');
         playBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            playAudioForCard(card);
+        });
+
+        // 新增：讓整張卡片都可以點擊播放音訊
+        card.addEventListener('click', () => {
+            // 直接呼叫現有的播放函式
             playAudioForCard(card);
         });
 
@@ -324,10 +345,102 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- 選擇題測驗相關函式 ---
+
+    function startQuiz() {
+        const selectedWeek = weekSelect.value;
+        if (!currentGradeData || !selectedWeek) {
+            alert('請先選擇年級和週次以載入單字！');
+            return;
+        }
+
+        const weekData = currentGradeData.weeks.find(w => w.week.toString() === selectedWeek);
+        const words = weekData.content;
+
+        if (!words || words.length < 4) {
+            alert('本週單字少於4個，無法產生選擇題。');
+            return;
+        }
+
+        quizContainer.style.display = 'block';
+        generateQuestion();
+    }
+
+    function generateQuestion() {
+        const selectedWeek = weekSelect.value;
+        const weekData = currentGradeData.weeks.find(w => w.week.toString() === selectedWeek);
+        const allWords = [...weekData.content]; // 複製一份單字陣列
+
+        // 1. 隨機選取一個正確答案
+        const correctWordIndex = Math.floor(Math.random() * allWords.length);
+        const correctWord = allWords.splice(correctWordIndex, 1)[0];
+
+        // 2. 隨機選取三個干擾選項
+        const options = [correctWord];
+        allWords.sort(() => 0.5 - Math.random()); // 打亂剩餘的單字
+        const distractors = allWords.slice(0, 3);
+        options.push(...distractors);
+
+        // 3. 再次打亂包含正確答案的四個選項
+        options.sort(() => 0.5 - Math.random());
+
+        // 4. 產生 HTML
+        quizContainer.innerHTML = `
+            <div class="quiz-question">「${correctWord.chinese}」的英文是？</div>
+            <div class="quiz-options">
+                ${options.map(word => `
+                    <div class="quiz-option" data-word="${word.word}">${word.word}</div>
+                `).join('')}
+            </div>
+            <div id="quiz-feedback"></div>
+        `;
+
+        // 5. 為選項加上事件監聽
+        const optionElements = quizContainer.querySelectorAll('.quiz-option');
+        optionElements.forEach(optionEl => {
+            optionEl.addEventListener('click', () => checkAnswer(optionEl, correctWord.word));
+        });
+    }
+
+    function checkAnswer(selectedOption, correctWord) {
+        const options = quizContainer.querySelectorAll('.quiz-option');
+        const feedbackEl = document.getElementById('quiz-feedback');
+        let isCorrect = false;
+
+        // 停用所有選項，防止重複點擊
+        options.forEach(opt => opt.classList.add('disabled'));
+
+        if (selectedOption.dataset.word === correctWord) {
+            selectedOption.classList.add('correct');
+            feedbackEl.innerHTML = '<p style="color: green;">答對了！</p>';
+            isCorrect = true;
+        } else {
+            selectedOption.classList.add('incorrect');
+            feedbackEl.innerHTML = `<p style="color: red;">答錯了，正確答案是 ${correctWord}。</p>`;
+            // 標示出正確答案
+            options.forEach(opt => {
+                if (opt.dataset.word === correctWord) {
+                    opt.classList.add('correct');
+                }
+            });
+        }
+
+        // 顯示「下一題」按鈕
+        const nextButton = document.createElement('button');
+        nextButton.textContent = '下一題';
+        nextButton.className = 'activity-btn';
+        nextButton.onclick = generateQuestion; // 點擊直接產生新題目
+        feedbackEl.appendChild(nextButton);
+    }
+
+
     // 程式起始點
     setupControlsAndModal(); 
     displayMessage("請先選擇年級。");
     weekSelect.disabled = true;
     gradeSelect.addEventListener('change', handleGradeChange);
     weekSelect.addEventListener('change', displayWordsForWeek);
+
+    // 新增：為測驗按鈕綁定事件
+    startQuizBtn.addEventListener('click', startQuiz);
 });

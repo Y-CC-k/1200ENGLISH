@@ -37,11 +37,22 @@
         <div id="word-list" class="word-list-container">
             <!-- JavaScript 將會在這裡動態插入單字卡 -->
         </div>
+
+        <hr>
+
+        <div id="activity-zone" class="activity-zone-container">
+            <h2>學習活動</h2>
+            <p>學完單字後，來挑戰看看吧！</p>
+            <button id="start-quiz-btn" class="activity-btn">開始選擇題測驗</button>
+            <button id="start-spelling-btn" class="activity-btn">開始拼字遊戲</button>
+
+            <div id="quiz-container" class="quiz-container" style="display: none;">
+                <!-- 測驗內容將由 JavaScript 動態生成 -->
+            </div>
+        </div>
     </main>
 
     <!-- defer 屬性確保 HTML 解析完畢後才執行 JS -->
     <script src="script.js" defer></script>
 </body>
 </html>
-
-

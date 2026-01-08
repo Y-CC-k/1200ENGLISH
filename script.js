@@ -115,20 +115,20 @@ document.addEventListener('DOMContentLoaded', () => {
             (w) => w.week.toString() === selectedWeek
         );
         
-        if (!weekData || weekData.content.length === 0) {
-            if (wordListContainer) displayMessage("這個組合沒有找到任何單字。");
-            return;
-        }
-
-        // 只在 index.html 才顯示單字卡列表
+        // 在 index.html 或 activity.html 都顯示單字卡列表
         if (wordListContainer) {
+            if (!weekData || weekData.content.length === 0) {
+                displayMessage("這個組合沒有找到任何單字。");
+                return;
+            }
+
             weekData.content.forEach(word => {
                 const card = createWordCard(word, selectedGrade, selectedWeek);
                 wordListContainer.appendChild(card);
             });
 
-            const mainWordCards = wordListContainer.querySelectorAll('.word-card');
-            if (toggleModeBtn && mainWordCards.length > 0) {
+            // 如果有教學模式按鈕且有單字卡，則顯示它
+            if (toggleModeBtn && wordListContainer.querySelector('.word-card')) {
                 toggleModeBtn.style.display = 'inline-block';
             }
         }

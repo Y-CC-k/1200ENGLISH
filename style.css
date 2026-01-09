@@ -1,8 +1,27 @@
+/* :root 定義全域 CSS 變數 */
+:root {
+    --primary-color: #00529B;
+    --primary-color-light: #e7f5ff;
+    --secondary-color: #007bff;
+    --secondary-color-hover: #0056b3;
+    --danger-color: #dc3545;
+    --danger-color-hover: #c82333;
+    --warning-color: #FFC107;
+    --warning-color-hover: #FFD54F;
+
+    --text-color-main: #333;
+    --text-color-subtle: #666;
+    --border-color: #e0e0e0;
+    --background-soft: #f4f7f9;
+    --background-white: #fff;
+    --border-radius-main: 8px;
+}
+
 /* 基本樣式 */
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: #f4f7f9; /* 使用一個柔和的灰白色背景，增加質感 */
-    color: #333; /* 主要文字顏色 */
+    background-color: var(--background-soft); /* 使用一個柔和的灰白色背景，增加質感 */
+    color: var(--text-color-main); /* 主要文字顏色 */
     line-height: 1.6;
     margin: 0;
 }
@@ -10,18 +29,18 @@ body {
 header {
     text-align: center;
     padding: 15px 10px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1px solid var(--border-color);
     margin-bottom: 1%;
 }
 
 h1 {
-    color: #00529B;
+    color: var(--primary-color);
     font-size: 2.2rem;
     margin: 0 0 10px 0;
 }
 
 header p {
-    color: #666;
+    color: var(--text-color-subtle);
     font-size: 1rem;
 }
 
@@ -31,10 +50,10 @@ header p {
     justify-content: center;
     gap: 20px;
     align-items: center;
-    margin-bottom: 40px;
-    background-color: #fff;
+    margin-bottom: 2.5rem; /* 使用 rem 保持一致性 */
+    background-color: var(--background-white);
     padding: 10px;
-    border-radius: 8px;
+    border-radius: var(--border-radius-main);
     max-width: 860px;
     margin-left: auto;
     margin-right: auto;
@@ -51,8 +70,8 @@ header p {
     -webkit-appearance: none;
     -moz-appearance: none;
     padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    border: 1px solid #ddd; /* 或者 var(--border-color) */
+    border-radius: var(--border-radius-main);
     font-size: 16px;
     background-color: #f9f9f9;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
@@ -80,9 +99,9 @@ header p {
 
 /* 單字卡片樣式 */
 .word-card {
-    background-color: #fff;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
+    background-color: var(--background-white);
+    border-radius: var(--border-radius-main);
+    border: 1px solid var(--border-color);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     padding: 20px;
     display: flex;
@@ -105,13 +124,13 @@ header p {
 .word-card .english {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #00529B;
+    color: var(--primary-color);
     margin: 0 0 5px 0;
 }
 
 .word-card .phonetic {
     font-size: 1.1rem;
-    color: #666;
+    color: var(--text-color-subtle);
     margin: 0 0 10px 0;
 }
 
@@ -123,8 +142,8 @@ header p {
 
 .word-card .pos {
     display: inline-block;
-    background-color: #e7f5ff;
-    color: #00529B;
+    background-color: var(--primary-color-light);
+    color: var(--primary-color);
     padding: 2px 8px;
     border-radius: 4px;
     font-size: 0.9rem;
@@ -141,7 +160,7 @@ header p {
 
 /* 播放按鈕 */
 .play-audio-btn {
-    background-color: #FFC107;
+    background-color: var(--warning-color);
     color: white;
     border: none;
     border-radius: 50%;
@@ -157,7 +176,7 @@ header p {
 }
 
 .play-audio-btn:hover {
-    background-color: #FFD54F;
+    background-color: var(--warning-color-hover);
 }
 
 .play-audio-btn:disabled {
@@ -169,34 +188,33 @@ header p {
 #toggle-teaching-mode {
     padding: 8px 16px;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: var(--border-radius-main);
     font-size: 16px;
     font-weight: 500;
-    background-color: #fff;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    background-color: #007bff;
+    background-color: var(--secondary-color);
     color: white;
-    border-color: #007bff;
+    border-color: var(--secondary-color);
 }
 
 #toggle-teaching-mode:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: #0056b3;
-    border-color: #0056b3;
+    background-color: var(--secondary-color-hover);
+    border-color: var(--secondary-color-hover);
     color: white;
 }
 
 /* 當 Modal 彈出時，「結束教學」按鈕的樣式 */
 .modal-open #toggle-teaching-mode {
-    background-color: #dc3545; /* 紅色 */
-    border-color: #dc3545;
+    background-color: var(--danger-color); /* 紅色 */
+    border-color: var(--danger-color);
 }
 .modal-open #toggle-teaching-mode:hover {
-    background-color: #c82333;
-    border-color: #bd2130;
+    background-color: var(--danger-color-hover);
+    border-color: var(--danger-color-hover);
 }
 
 /* --- Modal (教學模式彈出視窗) 樣式 --- */
@@ -205,8 +223,8 @@ header p {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background-color: #fff; /* 根據要求改為純白背景 */
+    height: 100vh; /* 使用 vh 單位確保佔滿整個視窗高度 */
+    background-color: var(--background-white); /* 根據要求改為純白背景 */
     display: none;
     justify-content: center;
     align-items: center;
@@ -259,7 +277,7 @@ header p {
     top: 20px;
     right: 30px;
     font-size: 40px;
-    color: #333; /* 因應白色背景，將關閉按鈕改為深色 */
+    color: var(--text-color-main); /* 因應白色背景，將關閉按鈕改為深色 */
     background: none;
     border: none;
     cursor: pointer;
